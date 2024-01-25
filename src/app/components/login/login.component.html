@@ -1,0 +1,62 @@
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
+<div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+	<div class="sm:mx-auto sm:w-full sm:max-w-md">
+		<h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+			Clone Trello
+		</h2>
+	</div>
+
+	<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+		<div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+			<div class="space-y-6" *ngIf="!linkSuccess; else check_mails">
+				<div class="space-y-6">
+					<label for="email" class="block text-sm font-medium text-gray-700"
+						>Email</label
+					>
+					<div class="mt-1">
+						<input
+							type="email"
+							[(ngModel)]="email"
+							autocomplete="email"
+							class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+						/>
+					</div>
+				</div>
+				<div class="space-y-6">
+					<label for="email" class="block text-sm font-medium text-gray-700"
+						>Password</label
+					>
+					<div class="mt-1">
+						<input
+							type="password"
+							[(ngModel)]="password"
+							class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+						/>
+					</div>
+				</div>
+				<div>
+					<button
+						*ngIf="authenticated === false; else another_value"
+						(click)="signUp()"
+						class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium bg-green-700 text-white"
+					>
+						Зарегистрироваться
+					</button>
+					<ng-template #another_value>
+						<button
+							(click)="signIn()"
+							class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium bg-blue-500 text-white"
+						>
+							Войти
+						</button>
+					</ng-template>
+					<button class="underline" (click)="authenticated = !authenticated">
+						Зарегистрироваться/Войти
+					</button>
+				</div>
+			</div>
+			<ng-template #check_mails>Пожалуйста проверьте вашу почту!</ng-template>
+		</div>
+	</div>
+</div>

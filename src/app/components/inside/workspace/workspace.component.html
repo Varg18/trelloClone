@@ -1,0 +1,46 @@
+<header class="bg-slate-500">
+	<nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div
+			class="flex w-full items-center justify-between border-b border-slate-500 py-6 lg:border-none"
+		>
+			<div class="flex items-center">
+				<a routerLink="/workspace">
+					<h1 class="font-bold text-white h-6 mx-auto">Trello Clone</h1>
+				</a>
+			</div>
+			<div class="ml-10 flex items-center space-x-4">
+				<span class="text-white">{{ (user | async)?.email }}</span>
+				<img ngxGravatar [email]="(user | async)?.email" />
+
+				<button
+					(click)="signOut()"
+					class="inline-block rounded-md border border-transparent bg-white py-1 px-4 text-base font-medium text-red-600 hover:bg-emerald-50"
+				>
+					Выйти
+				</button>
+			</div>
+		</div>
+	</nav>
+</header>
+
+<main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+	<ul
+		role="list"
+		class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
+	>
+		<li
+			*ngFor="let board of boards"
+			[routerLink]="board.boards.id"
+			class="relative h-52 rounded bg-slate-400 py-4 px-4 text-lg font-semibold hover:cursor-pointer hover:bg-slate-500"
+		>
+			{{ board.boards.title }}
+		</li>
+
+		<li
+			(click)="startBoard()"
+			class="relative h-52 rounded bg-slate-400 py-4 px-4 text-lg font-semibold hover:cursor-pointer"
+		>
+			Новая Запись
+		</li>
+	</ul>
+</main>

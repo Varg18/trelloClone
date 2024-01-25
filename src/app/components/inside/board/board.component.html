@@ -1,0 +1,137 @@
+<header class="bg-slate-500">
+	<nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div
+			class="flex w-full items-center justify-between border-b border-slate-500 py-6 lg:border-none"
+		>
+			<div class="flex items-center">
+				<a routerLink="/workspace" class="font-semibold text-white"> Назад </a>
+			</div>
+			<div class="flex gap-4">
+				<input
+					*ngIf="boardInfo"
+					(ngModelChange)="titleChanged = true"
+					class="ml-10 space-x-4 rounded border border-white bg-slate-500 font-bold text-white"
+					[(ngModel)]="boardInfo.title"
+				/>
+				<button
+					class="font-medium"
+					*ngIf="titleChanged"
+					(click)="saveBoardTitle()"
+				>
+					Сохранить
+				</button>
+			</div>
+
+			<div class="flex">
+				<button
+					class="text-small font-medium text-red-600"
+					(click)="deleteBoard()"
+				>
+					Удалить Запись
+				</button>
+			</div>
+		</div>
+	</nav>
+</header>
+
+<main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+	<div
+		class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
+	>
+		<div
+			*ngFor="let list of lists"
+			class="min-h-52 relative h-auto rounded bg-slate-400 py-4 px-4 text-sm font-semibold"
+		>
+			<div class="flex gap-2 pb-4">
+				<p
+					(click)="editingTitle(list, true)"
+					class="hover:cursor-pointer"
+					*ngIf="!editTitle[list.id]"
+				>
+					{{ list.title }}
+				</p>
+				<input
+					[(ngModel)]="list.title"
+					*ngIf="editTitle[list.id]"
+					class="block w-full rounded-md border border-white px-3 py-2 shadow-sm focus:border-white focus:outline-none focus:ring-white sm:text-sm"
+				/>
+				<button
+					class="font-medium text-white"
+					*ngIf="editTitle[list.id]"
+					(click)="updateListTitle(list)"
+				>
+					Сохранить
+				</button>
+			</div>
+
+			<div class="flex flex-col items-center gap-2">
+				<div
+					class="flex h-auto w-full flex-col gap-2 hover:cursor-pointer"
+					*ngFor="let card of listCards[list.id]"
+					(click)="editingCard(card, true)"
+				>
+					<p class="h-10 bg-white py-2 px-2" *ngIf="!editCard[card.id]">
+						{{ card.title }}
+					</p>
+					<input
+						[(ngModel)]="card.title"
+						*ngIf="editCard[card.id]"
+						class="block rounded-md border border-white px-3 py-2 shadow-sm focus:border-white focus:outline-none focus:ring-white sm:text-sm"
+					/>
+					<div class="align-items-center flex justify-between">
+						<button
+							class="font-medium text-white"
+							*ngIf="editCard[card.id]"
+							(click)="updateCard(card)"
+						>
+							Обновить
+						</button>
+
+						<button
+							class="font-medium text-red-600"
+							*ngIf="editCard[card.id]"
+							(click)="deleteCard(card)"
+						>
+							Удалить
+						</button>
+					</div>
+				</div>
+				<div
+					(click)="addCard(list)"
+					class="pt-8 text-white hover:cursor-pointer"
+				>
+					Добавить Запись
+				</div>
+				<button
+					class="text-small font-medium text-red-700"
+					(click)="deleteBoardList(list)"
+				>
+					Удалить Список
+				</button>
+			</div>
+		</div>
+
+		<div
+			(click)="addList()"
+			class="relative h-16 rounded bg-blue-400 text-white py-4 px-4 text-lg font-semibold hover:cursor-pointer"
+		>
+			Добавить Список
+		</div>
+	</div>
+</main>
+
+<div class="flex items-center gap-4 py-12">
+	<span class="block text-3xl font-extrabold text-gray-900">Пригласить</span>
+
+	<input
+		[(ngModel)]="addUserEmail"
+		placeholder="email@email.com"
+		class="block rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
+	/>
+	<button
+		(click)="addUser()"
+		class="inline-flex items-center rounded border border-transparent bg-emerald-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+	>
+		Пригласить
+	</button>
+</div>
